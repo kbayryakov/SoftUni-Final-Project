@@ -21,7 +21,7 @@
     <th:block sec:authorize="isAuthenticated()">
         <nav class="navbar navbar-expand-lg navbar-background">
             <a class="nav-link text-white active h5" th:href="@{/home}">
-                <img src="/images/logo.jpg" class="text-left" width="120" height="60"></a>
+                <img src="/images/logo.png" class="text-left" width="120" height="60"></a>
             <div class="collapse navbar-collapse d-flex justify-content-end">
                 <ul class="navbar-nav row">
                     <th:block>
@@ -117,5 +117,7 @@
                 </ul>
             </div>
         </nav>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     </th:block>
 </th:block>

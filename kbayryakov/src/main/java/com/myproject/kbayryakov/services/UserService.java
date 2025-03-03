@@ -3,7 +3,7 @@ package com.myproject.kbayryakov.services;
 import com.myproject.kbayryakov.errors.UserAlreadyExistException;
 import com.myproject.kbayryakov.models.User;
 import com.myproject.kbayryakov.repositories.UserRepository;
-import com.myproject.kbayryakov.services.dto.RegisterUserDto;
+import com.myproject.kbayryakov.web.dto.RegisterUserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,4 +55,12 @@ public class UserService implements UserDetailsService {
         this.userRepository.save(user);
     }
 
+    public User findUserByUsername(String username) {
+        return this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Invalid username"));//TODO create exception
+    }
+
+    public void editUser() {
+
+    }
 }
