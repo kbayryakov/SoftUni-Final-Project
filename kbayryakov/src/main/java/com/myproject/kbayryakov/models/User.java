@@ -1,17 +1,13 @@
 package com.myproject.kbayryakov.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, unique = true)
@@ -29,19 +25,43 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> authorities;
 
-    @Override
-    public String getPassword() {
-        return this.username;
+    public User() {
+        this.authorities = new LinkedHashSet<>();
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
-    public String getUsername() {
+    public String getPassword() {
         return this.password;
     }
 
     @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
     public Set<Role> getAuthorities() {
-        return authorities;
+        return this.authorities;
     }
 
     @Override

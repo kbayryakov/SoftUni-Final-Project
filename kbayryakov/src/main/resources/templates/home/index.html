@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{fragments/head}"/>
+<body>
+<th:block th:insert="~{fragments/header}"/>
+
+<main>
+    <div class="container">
+        <h1>Welcome to KBayryakov Car App</h1>
+        <hr class="my-3"/>
+        <h3><a th:href="@{/users/login}">Login</a> if you have an account or
+            <a th:href="@{/users/register}">Register</a> now and explore our cars.
+        </h3>
+        <hr class="my-3"/>
+        <h1>Have a nice journey!</h1>
+    </div>
+</main>
+
+</body>
+<th:block th:insert="~{fragments/footer}"/>
+</html>
