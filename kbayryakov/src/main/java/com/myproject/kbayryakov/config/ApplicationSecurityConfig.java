@@ -23,7 +23,7 @@ public class ApplicationSecurityConfig implements WebMvcConfigurer {
         )
         .formLogin(form -> form
                 .loginPage("/users/login")
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/home", true)
                 .failureUrl("/users/login?error")
                 .permitAll()
         )
