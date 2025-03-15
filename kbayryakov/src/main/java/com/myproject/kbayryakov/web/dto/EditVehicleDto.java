@@ -2,8 +2,7 @@ package com.myproject.kbayryakov.web.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class AddVehicleDto {
-
+public class EditVehicleDto {
     @NotNull
     private String type;
 
@@ -31,7 +30,7 @@ public class AddVehicleDto {
     @NotNull
     private String color;
 
-    public AddVehicleDto() {
+    public EditVehicleDto() {
     }
 
     public String getType() {
