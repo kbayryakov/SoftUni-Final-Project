@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"/>
+<body>
+<th:block th:include="~{fragments/header}"/>
+
+<main>
+    <div class="container">
+        <h1>CarDealer</h1>
+        <div class="container-fluid">
+            <h2 class="text-center text-dark">Add Vehicle</h2>
+            <form class="mx-auto w-75" th:action="@{/vehicles/add-vehicle}" th:method="post" th:object="${vehicleDetails}">
+                <!-- First Row -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="type">Type</label>
+                            <select id="type" name="type" class="form-control">
+                                <option value="Car">Car</option>
+                                <option value="Motor">Motor</option>
+                                <option value="Truck">Truck</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Row -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="brand">Brand</label>
+                            <textarea name="brand" id="brand" class="form-control" rows="1"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="model">Model</label>
+                            <textarea name="model" id="model" class="form-control" rows="1"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="state">State</label>
+                            <select id="state" name="state" class="form-control">
+                                <option value="New">New</option>
+                                <option value="Used">Used</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Row (Year, Mileage, Transmission) -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="year">Year</label>
+                            <input type="number" step="any" class="form-control text-center" id="year" name="year">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="mileage">Mileage</label>
+                            <input type="number" step="any" class="form-control text-center" id="mileage" name="mileage">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="transmission">Transmission</label>
+                            <select id="transmission" name="transmission" class="form-control">
+                                <option value="Automatic">Automatic</option>
+                                <option value="Semi-automatic">Semi-Automatic</option>
+                                <option value="Manual">Manual</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fourth Row (Euro Standard, Fuel Type, Color) -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="euroStandard">Euro Standard</label>
+                            <select id="euroStandard" name="euroStandard" class="form-control">
+                                <option value="EURO1">EURO1</option>
+                                <option value="EURO2">EURO2</option>
+                                <option value="EURO3">EURO3</option>
+                                <option value="EURO4">EURO4</option>
+                                <option value="EURO5">EURO5</option>
+                                <option value="EURO6">EURO6</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="fuelType">Fuel Type</label>
+                            <select id="fuelType" name="fuelType" class="form-control">
+                                <option value="Gasoline">Gasoline</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="font-weight-bold text-white" for="color">Color</label>
+                            <select id="color" name="color" class="form-control">
+                                <option value="Black">Black</option>
+                                <option value="Gray">Gray</option>
+                                <option value="Brown">Brown</option>
+                                <option value="Red">Red</option>
+                                <option value="Blue">Blue</option>
+                                <option value="White">White</option>
+                                <option value="Orange">Orange</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Green">Green</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Purple">Purple</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-success">Add Vehicle</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr class="my-3"/>
+    </div>
+</main>
+
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>
