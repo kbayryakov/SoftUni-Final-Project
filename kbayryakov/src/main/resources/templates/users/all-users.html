@@ -31,7 +31,7 @@
                 <td class="col-md-3 text-center">
 
                     <div class="row d-flex justify-content-center">
-                        <!-- Проверка за потребител, който има само ROLE_USER -->
+                        <!-- ROLE_USER -->
                         <th:block th:if="${#lists.contains(user.authorities.![authority], 'ROLE_USER') &&
                       !#lists.contains(user.authorities.![authority], 'ROLE_MODERATOR') &&
                       !#lists.contains(user.authorities.![authority], 'ROLE_ADMIN')}">
@@ -43,12 +43,27 @@
                             </form>
                         </th:block>
 
-                        <!-- Проверка за потребител, който има ROLE_USER и ROLE_MODERATOR, но не и ROLE_ADMIN -->
+                        <!-- ROLE_USER, ROLE_MODERATOR -->
                         <th:block th:if="${#lists.contains(user.authorities.![authority], 'ROLE_USER') &&
                       #lists.contains(user.authorities.![authority], 'ROLE_MODERATOR') &&
                       !#lists.contains(user.authorities.![authority], 'ROLE_ADMIN')}">
+                            <form th:action="@{/users/set-moderator/{id}(id=${user.id})}" method="post">
+                                <button class="btn btn-dark btn-width">MODERATOR</button>
+                            </form>
                             <form th:action="@{/users/set-admin/{id}(id=${user.id})}" method="post">
                                 <button class="btn btn-dark btn-width">ADMIN</button>
+                            </form>
+                        </th:block>
+
+                        <!-- ALL -->
+                        <th:block th:if="${#lists.contains(user.authorities.![authority], 'ROLE_USER') &&
+                      #lists.contains(user.authorities.![authority], 'ROLE_MODERATOR') &&
+                      #lists.contains(user.authorities.![authority], 'ROLE_ADMIN')}">
+                            <form th:action="@{/users/set-user/{id}(id=${user.id})}" method="post">
+                                <button class="btn btn-warning btn-width">REMOVE MODERATOR</button>
+                            </form>
+                            <form th:action="@{/users/set-user/{id}(id=${user.id})}" method="post">
+                                <button class="btn btn-danger btn-width">REMOVE ADMIN</button>
                             </form>
                         </th:block>
                     </div>

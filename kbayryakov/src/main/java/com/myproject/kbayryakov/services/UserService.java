@@ -40,6 +40,10 @@ public class UserService implements UserDetailsService {
     }
 
     public void register (RegisterUserDto data) {
+        if (!data.getPassword().equals(data.getConfirmPassword())) {
+            throw new UserAlreadyExistException("Passwords do not match");
+        }
+
         Optional<User> optionalUser = this.userRepository.findByUsernameOrEmail(data.getUsername(), data.getEmail());
 
         if (optionalUser.isPresent()) {
@@ -61,12 +65,12 @@ public class UserService implements UserDetailsService {
 
     public User findUserByUsername(String username) {
         return this.userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Invalid username"));//TODO create exception
+                .orElseThrow(() -> new UsernameNotFoundException("Invalid username"));
     }
 
     public void editUser(EditUserDto editUserDto) {
         User user = this.userRepository.findByEmail(editUserDto.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("Email not found")); // todo - change the exception
+                .orElseThrow(() -> new UsernameNotFoundException("Email not found"));
 
         user.setPassword(this.bCryptPasswordEncoder.encode(editUserDto.getNewPassword()));
         user.setUsername(editUserDto.getUsername());

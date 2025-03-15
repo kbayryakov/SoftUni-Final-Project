@@ -61,19 +61,7 @@ public class UserController extends BaseController {
             return modelAndView;
         }
 
-        if (!registerUserData.getPassword().equals(registerUserData.getConfirmPassword())) {
-            return redirect("/users/register");
-        }
-
-        try {
-            this.userService.register(registerUserData);
-        } catch (UserAlreadyExistException e) {
-            modelAndView = view("users/register");
-            modelAndView.addObject("registerUserData", registerUserData);
-            modelAndView.addObject("errorMessage", e.getMessage());
-            return modelAndView;
-            //TODO change when create exception handling
-        }
+        this.userService.register(registerUserData);
 
         return redirect("/users/login");
     }
