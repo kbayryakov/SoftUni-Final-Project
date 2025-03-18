@@ -115,4 +115,5 @@ public class VehicleController extends BaseController{
 
         return super.redirect("/vehicles/details-vehicle/" + id);
     }
+
 }
