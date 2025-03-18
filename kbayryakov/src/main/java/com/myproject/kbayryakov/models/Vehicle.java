@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "vehicles")
 public class Vehicle extends BaseEntity {
 
-    @OneToOne(mappedBy = "vehicle")
     @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private Offer offer;
 
