@@ -22,7 +22,6 @@ public class RoleService {
         if (this.roleRepository.count() == 0) {
             this.roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
             this.roleRepository.saveAndFlush(new Role("ROLE_MODERATOR"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ROOT"));
             this.roleRepository.saveAndFlush(new Role("ROLE_USER"));
         }
     }

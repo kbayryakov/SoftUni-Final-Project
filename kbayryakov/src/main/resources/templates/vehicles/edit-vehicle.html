@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="~{fragments/head}"/>
+<th:block th:insert="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/header}"/>
+<th:block th:insert="~{fragments/header}"/>
 
 <main>
     <div class="container">
         <div class="container-fluid">
-            <h2 class="text-center text-dark">Edit Vehicle</h2>
-            <form class="mx-auto w-75" th:action="@{/vehicles/edit-vehicle/{id}(id=${id})}" th:method="patch">
+            <h2 class="text-center text-light">Edit Vehicle</h2>
+            <form class="mx-auto w-75"
+                  th:action="@{/vehicles/edit-vehicle/{id}(id=${id})}"
+                  th:method="patch"
+                  th:object="${vehicle}"
+            >
+
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                </div>
+
                 <input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
 
-                <!-- First Row -->
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -23,38 +31,46 @@
                                 <option value="Motor">Motor</option>
                                 <option value="Truck">Truck</option>
                             </select>
+                            <small th:errors="*{type}" id="typeUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Second Row -->
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-weight-bold text-white" for="brand">Brand</label>
                             <textarea name="brand" id="brand" class="form-control" rows="1" th:placeholder="${vehicle.brand}"></textarea>
+                            <small th:errors="*{brand}" id="brandUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-weight-bold text-white" for="model">Model</label>
                             <textarea name="model" id="model" class="form-control" rows="1" th:placeholder="${vehicle.model}"></textarea>
+                            <small th:errors="*{model}" id="modelUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Third Row (Year, Mileage, Transmission) -->
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-weight-bold text-white" for="year">Year</label>
                             <input type="number" step="any" class="form-control text-center" id="year" name="year" th:placeholder="${vehicle.year}">
+                            <small th:errors="*{year}" id="yearUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="font-weight-bold text-white" for="mileage">Mileage</label>
                             <input type="number" step="any" class="form-control text-center" id="mileage" name="mileage" th:placeholder="${vehicle.mileage}">
+                            <small th:errors="*{mileage}" id="mileageUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -66,11 +82,12 @@
                                 <option value="Semi-automatic">Semi-Automatic</option>
                                 <option value="Manual">Manual</option>
                             </select>
+                            <small th:errors="*{transmission}" id="transmissionUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fourth Row (Euro Standard, Fuel Type, Color) -->
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -84,6 +101,8 @@
                                 <option value="EURO5">EURO5</option>
                                 <option value="EURO6">EURO6</option>
                             </select>
+                            <small th:errors="*{euroStandard}" id="euroStandardUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -96,6 +115,8 @@
                                 <option value="Electric">Electric</option>
                                 <option value="Hybrid">Hybrid</option>
                             </select>
+                            <small th:errors="*{fuelType}" id="fuelTypeUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -116,11 +137,12 @@
                                 <option value="Yellow">Yellow</option>
                                 <option value="Purple">Purple</option>
                             </select>
+                            <small th:errors="*{color}" id="colorUniqueError"
+                                   class=" bg-danger text-white rounded"></small>
                         </div>
                     </div>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="row justify-content-center mb-3">
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-success">Edit Vehicle</button>
@@ -132,6 +154,6 @@
     </div>
 </main>
 
-<th:block th:include="~{fragments/footer}"/>
+<th:block th:insert="~{fragments/footer}"/>
 </body>
 </html>

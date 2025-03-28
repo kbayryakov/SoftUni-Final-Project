@@ -27,20 +27,16 @@ import java.util.stream.Collectors;
 public class UserController extends BaseController {
 
     private final UserService userService;
-    private final ModelMapper modelMapper;
-    private final UserEditValidator userEditValidator;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper, UserEditValidator userEditValidator) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.modelMapper = modelMapper;
-        this.userEditValidator = userEditValidator;
     }
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
     @PageTitle("Register")
-    public ModelAndView getRegister(ModelAndView modelAndView) {
+    public ModelAndView getRegister(ModelAndView modelAndView) throws Exception {
         modelAndView = super.view("users/register");
         modelAndView.addObject("registerUserData", new RegisterUserDto());
         return modelAndView;
@@ -73,45 +69,6 @@ public class UserController extends BaseController {
         ModelAndView modelAndView = super.view("users/login");
         modelAndView.addObject("loginUserData", new LoginUserDto());
         return modelAndView;
-    }
-
-    @GetMapping("/profile")
-    @PreAuthorize("isAuthenticated()")
-    @PageTitle
-    public ModelAndView viewProfile (ModelAndView modelAndView, Principal principal) {
-        User user = this.userService.findUserByUsername(principal.getName());
-        modelAndView.addObject("model", user);
-        return super.view("users/profile", modelAndView);
-    }
-
-    @GetMapping("/edit-profile")
-    @PreAuthorize("isAuthenticated()")
-    @PageTitle("Edit Profile")
-    public ModelAndView getEditProfile(ModelAndView modelAndView, Principal principal,
-                                       @ModelAttribute(name = "model") EditUserDto model) {
-        User user = this.userService.findUserByUsername(principal.getName());
-        model = this.modelMapper.map(user, EditUserDto.class);
-        modelAndView.addObject("model", model);
-        return super.view("users/edit-profile", modelAndView);
-    }
-
-    @PostMapping("/edit-profile")
-    @PreAuthorize("isAuthenticated()")
-    @PageTitle("Edit Profile")
-    public ModelAndView doEditProfile(ModelAndView modelAndView,
-                                      @ModelAttribute(name = "model") @Valid EditUserDto model,
-                                      BindingResult bindingResult) {
-        this.userEditValidator.validate(model, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("model", model);
-
-            return super.view("users/edit-profile", modelAndView);
-        }
-
-        this.userService.editUser(model);
-
-        return super.redirect("/users/profile");
     }
 
     @GetMapping("/all")

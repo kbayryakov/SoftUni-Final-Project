@@ -6,10 +6,12 @@ import com.myproject.kbayryakov.services.OfferService;
 import com.myproject.kbayryakov.services.VehicleService;
 import com.myproject.kbayryakov.web.annotations.PageTitle;
 import com.myproject.kbayryakov.web.dto.AddOfferDto;
+import com.myproject.kbayryakov.web.dto.EditOfferDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,13 +40,25 @@ public class OfferController extends BaseController{
     public ModelAndView getOffer(ModelAndView modelAndView, Principal principal) {
         List<Vehicle> vehicles = this.vehicleService.findAllByUsername(principal.getName());
         modelAndView.addObject("vehicles", vehicles);
+        modelAndView.addObject("addOfferDto", new AddOfferDto());
         return super.view("offers/add-offer", modelAndView);
     }
 
     @PostMapping("/add-offer")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Add Offer")
-    public ModelAndView doAddOffer(@Valid AddOfferDto addOfferDto, Principal principal) {
+    public ModelAndView doAddOffer(Principal principal,
+                                   @Valid AddOfferDto addOfferDto,
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = super.view("offers/add-offer");
+            List<Vehicle> vehicles = this.vehicleService.findAllByUsername(principal.getName());
+            modelAndView.addObject("vehicles", vehicles);
+            modelAndView.addObject("addOfferDto", addOfferDto);
+            modelAndView.addObject("org.springframework.validation.BindingResult.addOfferDto", bindingResult);
+            return modelAndView;
+        }
+
         String username = principal.getName();
 
         this.offerService.create(addOfferDto, username);
@@ -84,10 +98,51 @@ public class OfferController extends BaseController{
     }
 
     @PostMapping("/delete-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
     @PageTitle("Delete Offer")
     public ModelAndView doDeleteOffer(@PathVariable UUID id) {
         this.offerService.delete(id);
 
         return super.redirect("/offers/my-offer");
+    }
+
+    @GetMapping("/edit-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit Offer")
+    public ModelAndView getEditOffer(@PathVariable UUID id,
+                                     ModelAndView modelAndView) {
+        Offer offer = this.offerService.findById(id);
+        modelAndView.addObject("offer", offer);
+        modelAndView.addObject("id", id);
+
+        return super.view("offers/edit-offer", modelAndView);
+    }
+
+    @PostMapping("/edit-offer/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit Offer")
+    public ModelAndView doEditOffer(@PathVariable UUID id,
+                                    @Valid EditOfferDto offer,
+                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = super.view("offers/edit-offer");
+            modelAndView.addObject("offer", offer);
+            modelAndView.addObject("org.springframework.validation.BindingResult.offer", bindingResult);
+            modelAndView.addObject("id", id);
+            return modelAndView;
+        }
+
+        this.offerService.edit(id, offer);
+        return super.redirect("/offers/my-offer");
+    }
+
+    @GetMapping("/offer-details/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Offer Details")
+    public ModelAndView getOfferDetails(@PathVariable UUID id, ModelAndView modelAndView) {
+        Offer offer = this.offerService.findById(id);
+        modelAndView.addObject("offer", offer);
+
+        return super.view("offers/offer-details", modelAndView);
     }
 }

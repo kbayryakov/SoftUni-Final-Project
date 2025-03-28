@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="~{fragments/head}"/>
+<th:block th:insert="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/header}"/>
+<th:block th:insert="~{fragments/header}"/>
 
 <main>
     <div class="container">
         <div class="container-fluid">
-            <h2 class="text-center text-dark">Vehicle Details</h2>
+            <h2 class="text-center text-light">Vehicle Details</h2>
                 <div class="row col justify-content-center">
                     <div class="form-group">
                         <div class="label-holder d-flex justify-content-center">
@@ -22,14 +22,14 @@
                 <div class="row col justify-content-center">
                     <div class="col col-md-3">
                         <div class="form-group">
-                            <label class="font-weight-bold">Brand</label>
+                            <label class="text-white font-weight-bold">Brand</label>
                             <input type="text" class="form-control text-center" id="brand" name="brand"
                                    th:value="${vehicle.brand}" disabled>
                         </div>
                     </div>
                     <div class="col col-md-3">
                         <div class="form-group">
-                            <label class="font-weight-bold">Model</label>
+                            <label class="text-white font-weight-bold">Model</label>
                             <input type="text" class="form-control text-center" id="model" name="model"
                                    th:value="${vehicle.model}" disabled>
                         </div>
@@ -87,6 +87,6 @@
         <hr class="my-3"/>
     </div>
 </main>
-<th:block th:include="~{fragments/footer}"/>
+<th:block th:insert="~{fragments/footer}"/>
 </body>
 </html>

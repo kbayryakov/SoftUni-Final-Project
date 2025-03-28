@@ -2,46 +2,64 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
 >
-<th:block th:include="~{fragments/head}"/>
+<th:block th:insert="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/header}"/>
+<th:block th:insert="~{fragments/header}"/>
 
 <main class="container">
-    <h1 class="text-center">All Offers</h1>
+    <h1 class="text-light text-center">All Offers</h1>
     <hr class="hr-3"/>
     <table class="table bg-blur text-white font-weight-bold">
         <thead>
         <tr class="row mx-auto text-white">
-            <th class="col-md-1 text-center">#</th>
             <th class="col-md-1 text-center">Vehicle</th>
+            <th class="col-md-1 text-center">Offer</th>
             <th class="col-md-2 text-center">Created On</th>
             <th class="col-md-2 text-center">Valid Until</th>
             <th class="col-md-1 text-center">Price</th>
             <th class="col-md-2 text-center">Description</th>
+            <th class="col-md-1 text-center">Edit</th>
+            <th class="col-md-2 text-center">Delete</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="offer, iter : ${offers}">
             <tr class="row mx-auto text-white">
-                <th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
                 <td class="col-md-1 text-center">
                     <a th:href="@{/vehicles/details-vehicle/{id}(id=${offer.vehicle.id})}"
+                       class="btn btn-dark font-weight-bold text-white">View</a>
+                </td>
+                <td class="col-md-1 text-center">
+                    <a th:href="@{/offers/offer-details/{id}(id=${offer.id})}"
                        class="btn btn-dark font-weight-bold text-white">View</a>
                 </td>
                 <td class="col-md-2 text-center" th:text="${offer.createdOn}"></td>
                 <td class="col-md-2 text-center" th:text="${offer.validUntil}"></td>
                 <td class="col-md-1 text-center" th:text="${offer.price}"></td>
                 <td class="col-md-2 text-center" th:text="${offer.description}"></td>
-                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                    <td class="col-md-3 text-center">
+                <td class="col-md-1 text-center">
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/offers/edit-offer/{id}(id=${offer.id})}"
+                           class="btn btn-success font-weight-bold text-white">Edit</a>
+                    </th:block>
+                    <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+                        <span class="text-muted">Denied</span>
+                    </th:block>
+                </td>
+                <td class="col-md-2 text-center">
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <a th:href="@{/offers/delete-offer/{id}(id=${offer.id})}"
                            class="btn btn-danger font-weight-bold text-white">Delete</a>
-                    </td>
-                </th:block>
+                    </th:block>
+                    <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+                        <span class="text-muted">Denied</span>
+                    </th:block>
+                </td>
+
             </tr>
         </th:block>
     </table>
 </main>
-<th:block th:include="~{fragments/footer}" />
+<th:block th:insert="~{fragments/footer}" />
 </body>
 </html>

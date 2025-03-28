@@ -1,11 +1,12 @@
 package com.myproject.kbayryakov.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class LoginUserDto {
-    @NotNull
+    @NotBlank
     private String username;
-    @NotNull
+    @NotBlank
     private String password;
 
     public LoginUserDto() {

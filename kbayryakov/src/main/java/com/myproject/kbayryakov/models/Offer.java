@@ -1,6 +1,7 @@
 package com.myproject.kbayryakov.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,13 +18,18 @@ public class Offer extends BaseEntity {
     private LocalDate createdOn;
 
     @Column(name = "valid_until", nullable = false)
-    private String validUntil;
+    private LocalDate validUntil;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
+    @NotBlank
     private String description;
+
+    @Column(name = "image_url", nullable = false)
+    @NotBlank
+    private String imageUrl;
 
     @OneToOne()
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
@@ -45,11 +51,11 @@ public class Offer extends BaseEntity {
         this.createdOn = createdOn;
     }
 
-    public String getValidUntil() {
+    public LocalDate getValidUntil() {
         return validUntil;
     }
 
-    public void setValidUntil(String validUntil) {
+    public void setValidUntil(LocalDate validUntil) {
         this.validUntil = validUntil;
     }
 
@@ -75,6 +81,14 @@ public class Offer extends BaseEntity {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public @NotBlank String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(@NotBlank String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Offer() {

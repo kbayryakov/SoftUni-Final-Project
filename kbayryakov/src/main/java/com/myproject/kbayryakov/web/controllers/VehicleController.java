@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,15 +33,25 @@ public class VehicleController extends BaseController{
     @GetMapping("/add-vehicle")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Add Vehicle")
-    public ModelAndView getAddVehicle() {
-        return super.view("vehicles/add-vehicle");
+    public ModelAndView getAddVehicle(ModelAndView modelAndView) {
+        modelAndView.addObject("vehicleDetails", new AddVehicleDto());
+        return super.view("vehicles/add-vehicle", modelAndView);
     }
 
     @PostMapping("/add-vehicle")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Add Vehicle")
-    public ModelAndView doAddVehicle(@ModelAttribute(name = "vehicleDetails") @Valid AddVehicleDto vehicleDetails,
-                                     Principal principal) {
+    public ModelAndView doAddVehicle(Principal principal,
+                                     @ModelAttribute(name = "vehicleDetails") @Valid AddVehicleDto vehicleDetails,
+                                     BindingResult bindingResult,
+                                     ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView = super.view("vehicles/add-vehicle");
+            modelAndView.addObject("vehicleDetails", vehicleDetails);
+            modelAndView.addObject("org.springframework.validation.BindingResult.vehicleDetails", bindingResult);
+            return modelAndView;
+        }
+
         String username = principal.getName();
         this.vehicleService.create(vehicleDetails, username);
 
@@ -110,9 +121,20 @@ public class VehicleController extends BaseController{
     @PostMapping("edit-vehicle/{id}")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Edit Vehicle")
-    public ModelAndView doEditVehicle(@PathVariable UUID id, @Valid EditVehicleDto editData) {
-        this.vehicleService.editVehicle(id, editData);
+    public ModelAndView doEditVehicle(@PathVariable UUID id,
+                                      @Valid EditVehicleDto editData,
+                                      BindingResult bindingResult,
+                                      ModelAndView modelAndView) {
+        if (bindingResult.hasErrors()) {
+            modelAndView = super.view("vehicles/edit-vehicle");
+            Vehicle vehicle = this.vehicleService.findById(id);
+            editData = this.modelMapper.map(vehicle, EditVehicleDto.class);
+            modelAndView.addObject("vehicle", editData);
+            modelAndView.addObject("org.springframework.validation.BindingResult.vehicleDetails", bindingResult);
+            return modelAndView;
+        }
 
+        this.vehicleService.editVehicle(id, editData);
         return super.redirect("/vehicles/details-vehicle/" + id);
     }
 

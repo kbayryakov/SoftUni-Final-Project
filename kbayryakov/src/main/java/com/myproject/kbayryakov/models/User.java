@@ -1,6 +1,7 @@
 package com.myproject.kbayryakov.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.LinkedHashSet;
@@ -11,12 +12,15 @@ import java.util.Set;
 public class User extends BaseEntity implements UserDetails {
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String username;
 
     @Column(nullable = false)
+    @NotBlank
     private String password;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String email;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)

@@ -1,15 +1,16 @@
 package com.myproject.kbayryakov.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class EditVehicleDto {
-    @NotNull
+    @NotBlank
     private String type;
 
-    @NotNull
+    @NotBlank
     private String model;
 
-    @NotNull
+    @NotBlank
     private String brand;
 
     @NotNull
@@ -18,16 +19,16 @@ public class EditVehicleDto {
     @NotNull
     private Integer mileage;
 
-    @NotNull
+    @NotBlank
     private String transmission;
 
-    @NotNull
+    @NotBlank
     private String euroStandard;
 
-    @NotNull
+    @NotBlank
     private String fuelType;
 
-    @NotNull
+    @NotBlank
     private String color;
 
     public EditVehicleDto() {

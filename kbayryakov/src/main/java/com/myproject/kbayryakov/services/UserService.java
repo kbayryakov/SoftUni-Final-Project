@@ -2,6 +2,7 @@ package com.myproject.kbayryakov.services;
 
 import com.myproject.kbayryakov.errors.UserAlreadyExistException;
 import com.myproject.kbayryakov.models.User;
+import com.myproject.kbayryakov.notifications.service.NotificationService;
 import com.myproject.kbayryakov.repositories.UserRepository;
 import com.myproject.kbayryakov.web.dto.EditUserDto;
 import com.myproject.kbayryakov.web.dto.RegisterUserDto;
@@ -24,13 +25,15 @@ public class UserService implements UserDetailsService {
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final NotificationService notificationService;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, NotificationService notificationService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -61,6 +64,19 @@ public class UserService implements UserDetailsService {
         }
 
         this.userRepository.save(user);
+
+        try {
+            this.notificationService.saveUser(user.getId(), user.getEmail());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            String body = "Hello %s! Have a good time in the app!".formatted(user.getUsername());
+            this.notificationService.sendNotification(user.getId(), "New user greetings", body);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public User findUserByUsername(String username) {

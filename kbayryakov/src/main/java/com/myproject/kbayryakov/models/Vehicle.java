@@ -1,6 +1,7 @@
 package com.myproject.kbayryakov.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "vehicles")
@@ -14,12 +15,15 @@ public class Vehicle extends BaseEntity {
     private User user;
 
     @Column(nullable = false)
+    @NotBlank
     private String type;
 
     @Column(nullable = false)
+    @NotBlank
     private String model;
 
     @Column(nullable = false)
+    @NotBlank
     private String brand;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")
@@ -29,15 +33,19 @@ public class Vehicle extends BaseEntity {
     private Integer mileage;
 
     @Column(nullable = false)
+    @NotBlank
     private String transmission;
 
     @Column(name = "euro_standard", nullable = false)
+    @NotBlank
     private String euroStandard;
 
     @Column(name = "fuel_type", nullable = false)
+    @NotBlank
     private String fuelType;
 
     @Column(nullable = false)
+    @NotBlank
     private String color;
 
     public Vehicle() {

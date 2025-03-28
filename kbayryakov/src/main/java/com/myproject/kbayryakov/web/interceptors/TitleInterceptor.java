@@ -3,10 +3,12 @@ package com.myproject.kbayryakov.web.interceptors;
 import com.myproject.kbayryakov.web.annotations.PageTitle;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+@Component
 public class TitleInterceptor implements HandlerInterceptor {
 
     @Override

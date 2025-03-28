@@ -1,16 +1,17 @@
 package com.myproject.kbayryakov.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class AddVehicleDto {
 
-    @NotNull
+    @NotBlank
     private String type;
 
-    @NotNull
+    @NotBlank
     private String model;
 
-    @NotNull
+    @NotBlank
     private String brand;
 
     @NotNull
@@ -19,17 +20,20 @@ public class AddVehicleDto {
     @NotNull
     private Integer mileage;
 
-    @NotNull
+    @NotBlank
     private String transmission;
 
-    @NotNull
+    @NotBlank
     private String euroStandard;
 
-    @NotNull
+    @NotBlank
     private String fuelType;
 
-    @NotNull
+    @NotBlank
     private String color;
+
+    @NotBlank
+    private String state;
 
     public AddVehicleDto() {
     }
@@ -104,5 +108,13 @@ public class AddVehicleDto {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

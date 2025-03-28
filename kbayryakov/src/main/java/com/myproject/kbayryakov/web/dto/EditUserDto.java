@@ -1,21 +1,22 @@
 package com.myproject.kbayryakov.web.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class EditUserDto {
-    @NotNull
+    @NotBlank
     @Size(min = 3, max = 10)
     private String username;
-    @NotNull
+    @NotBlank
     private String password;
-    @NotNull
+    @NotBlank
     @Size(min = 6, max = 20)
     private String newPassword;
-    @NotNull
+    @NotBlank
     @Size(min = 6, max = 20)
     private String confirmNewPassword;
-    @NotNull
+    @NotBlank
     private String email;
 
     public EditUserDto() {

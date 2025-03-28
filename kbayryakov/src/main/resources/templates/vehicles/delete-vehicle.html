@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<th:block th:include="~{fragments/head}"/>
+<th:block th:insert="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/header}"/>
+<th:block th:insert="~{fragments/header}"/>
 
 <main>
     <div class="container">
         <div class="container-fluid">
-            <h2 class="text-center text-dark">Delete Vehicle</h2>
+            <h2 class="text-center text-light">Delete Vehicle</h2>
             <form class="form text-white" th:action="@{/vehicles/delete-vehicle/{id}(id=${vehicle.id})}"
                   th:method="patch"><input type="hidden"  name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
                 <div class="row col justify-content-center">
@@ -54,6 +54,6 @@
         <hr class="my-3"/>
     </div>
 </main>
-<th:block th:include="~{fragments/footer}"/>
+<th:block th:insert="~{fragments/footer}"/>
 </body>
 </html>

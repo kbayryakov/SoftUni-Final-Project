@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
 >
-<th:block th:include="~{fragments/head}"/>
+<th:block th:insert="~{fragments/head}"/>
 <body>
-<th:block th:include="~{fragments/header}"/>
+<th:block th:insert="~{fragments/header}"/>
 
 <main class="container">
-    <h1 class="text-center">All Vehicles</h1>
+    <h1 class="text-center text-light">All Vehicles</h1>
     <hr class="hr-3"/>
     <table class="table bg-blur text-white font-weight-bold">
         <thead>
@@ -50,6 +50,6 @@
         </tbody>
     </table>
 </main>
-<th:block th:include="~{fragments/footer}" />
+<th:block th:insert="~{fragments/footer}" />
 </body>
 </html>
