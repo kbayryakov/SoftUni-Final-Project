@@ -137,5 +137,4 @@ public class VehicleController extends BaseController{
         this.vehicleService.editVehicle(id, editData);
         return super.redirect("/vehicles/details-vehicle/" + id);
     }
-
 }

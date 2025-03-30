@@ -26,7 +26,7 @@ public class Vehicle extends BaseEntity {
     @NotBlank
     private String brand;
 
-    @Column(nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")
+    @Column(name = "manufactured_year", nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")
     private Integer year;
 
     @Column(nullable = false, columnDefinition = "INT UNSIGNED DEFAULT 0")

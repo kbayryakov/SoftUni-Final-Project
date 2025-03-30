@@ -1,16 +1,11 @@
 package com.myproject.kbayryakov.web.controllers;
 
-import com.myproject.kbayryakov.errors.UserAlreadyExistException;
-import com.myproject.kbayryakov.models.Role;
 import com.myproject.kbayryakov.models.User;
 import com.myproject.kbayryakov.services.UserService;
-import com.myproject.kbayryakov.web.dto.EditUserDto;
 import com.myproject.kbayryakov.web.dto.LoginUserDto;
 import com.myproject.kbayryakov.web.dto.RegisterUserDto;
 import com.myproject.kbayryakov.web.annotations.PageTitle;
-import com.myproject.kbayryakov.web.validation.UserEditValidator;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,9 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
