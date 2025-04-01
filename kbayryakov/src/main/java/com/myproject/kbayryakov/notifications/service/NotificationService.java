@@ -23,10 +23,13 @@ public class NotificationService {
         userInfoDto.setUserId(userId);
         userInfoDto.setContactInfo(contactInfo);
 
-        ResponseEntity<Void> response = this.notificationClient.sendUserData(userInfoDto);
-
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            System.out.printf("Feign call failed. Can't save user with id = %s.", userId.toString());
+        try {
+            ResponseEntity<Void> response = this.notificationClient.sendUserData(userInfoDto);
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                System.out.printf("Feign call failed. Can't save user with id = %s.%n", userId.toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -38,9 +41,12 @@ public class NotificationService {
 
         try {
             ResponseEntity<Void> response = notificationClient.sendNotification(notificationRequest);
-            System.out.printf("Feign call failed. Can't send email to user with id = %s.", userId.toString());
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                System.out.printf("Feign call failed. Can't send email to user with id = %s.%n",
+                        userId.toString());
+            }
         } catch (Exception e) {
-            System.out.printf("Can't send email to user with id = %s due to Internal Server Error",
+            System.out.printf("Can't send email to user with id = %s due to Internal Server Error.%n",
                     userId.toString());
         }
     }
